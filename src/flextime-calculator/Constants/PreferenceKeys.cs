@@ -6,29 +6,29 @@ internal static class PreferenceKeys
     public const string SetupComplete = "SetupComplete";
 
     // Settings
-    public const string UsualComeTime = "UsualComeTime";
-    public const string UsualGoTime = "UsualGoTime";
-    public const string WeeklyHours = "WeeklyHours";
-    public const string WeeklyMinutes = "WeeklyMinutes";
-    public const string DailyHours = "DailyHours";
-    public const string DailyMinutes = "DailyMinutes";
-    public const string SmallBreakStart = "SmallBreakStart";
-    public const string SmallBreakEnd = "SmallBreakEnd";
-    public const string MainBreakStart = "MainBreakStart";
-    public const string MainBreakEnd = "MainBreakEnd";
+    public const string SettingsCome = "SettingsCome";
+    public const string SettingsGo = "SettingsGo";
+    public const string SettingsWeeklyHours = "SettingsWeeklyHours";
+    public const string SettingsWeeklyMinutes = "SettingsWeeklyMinutes";
+    public const string SettingsDailyHours = "SettingsDailyHours";
+    public const string SettingsDailyMinutes = "SettingsDailyMinutes";
+    public const string SettingsSmallBreakStart = "SettingsSmallBreakStart";
+    public const string SettingsSmallBreakEnd = "SettingsSmallBreakEnd";
+    public const string SettingsMainBreakStart = "SettingsMainBreakStart";
+    public const string SettingsMainBreakEnd = "SettingsMainBreakEnd";
 
     // States
-    public const string ComeMon = "ComeMon";
-    public const string ComeTue = "ComeTue";
-    public const string ComeWed = "ComeWed";
-    public const string ComeThu = "ComeThu";
-    public const string ComeFri = "ComeFri";
-    public const string GoMon = "GoMon";
-    public const string GoTue = "GoTue";
-    public const string GoWed = "GoWed";
-    public const string GoThu = "GoThu";
+    public const string ComeMonday = "ComeMonday";
+    public const string ComeTuesday = "ComeTuesday";
+    public const string ComeWednesday = "ComeWednesday";
+    public const string ComeThursday = "ComeThursday";
+    public const string ComeFriday = "ComeFriday";
+    public const string GoMonday = "GoMonday";
+    public const string GoTuesday = "GoTuesday";
+    public const string GoWednesday = "GoWednesday";
+    public const string GoThursday = "GoThursday";
 
-    public const string ComeDay = "ComeDay";
+    public const string ComeDayTime = "ComeDayTime";
 
     public const string LateShift = "LateShift";
 }

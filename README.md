@@ -4,7 +4,7 @@
 
 # Flextime Calculator
 
-A cross-platform .NET MAUI app for workers to track their weekly working time. Enter beginning and ending working times for each workday and the app calculates daily overtime or deficit, cumulative weekly overtimes/deficits, and the earliest possible ending time on Friday (german: "Feierabend").
+A cross-platform .NET MAUI app for workers to track their weekly working time. Enter beginning and ending of working times for each workday and the app calculates daily overtime/deficit, cumulative weekly overtimes/deficits, and the earliest possible ending time on Friday (german: "Feierabend").
 
 <br/>
 
@@ -30,7 +30,7 @@ The main screen has two views:
 1. **Week view** — Enter working times from Monday to Friday morning. The app calculates daily and cumulative overtimes/deficits by the needed daily hours and determines the earliest time one can leave on Friday to fulfill the weekly hours. Optional late shift mode available.
 2. **Day view** — Enter a single begin time and get the earliest end of work time for that day based on the daily needed hours.
 
-A slide-in settings panel lets you adjust usual beginning/ending times weekly and daily hours, and break times.
+A slide-in settings panel lets you adjust usual beginning/ending times, weekly and daily hours, and break times.
 
 ## Features
 
@@ -40,16 +40,23 @@ A slide-in settings panel lets you adjust usual beginning/ending times weekly an
 - Automatic Friday end of work time calculation
 - Day view for single-day end of work time calculation
 - Configurable usual beginning/end times, weekly hours, and break durations in settings panel
-- Restore button to reset all times to usual times.
-- Checkbox for late shift mode. Configures earliest leaving time.
-- Info text bubbles about time/break conventions.
+- Restore button to reset all times to usual times
+- Checkbox for late shift mode, which configures earliest leaving time
+- Info text bubbles about time/break conventions
 - All time states stored across app restarts
 
 ## Project Structure
 
+The app follows the **MVVM (Model-View-ViewModel)** pattern:
+
 ```
-src/flextime-calculator/    # .NET MAUI app source
-docs/                       # Documentation assets
+src/flextime-calculator/
+├── Models/         # Data and time calculation logic
+├── ViewModels/     # ViewModelBase (INotifyPropertyChanged), MainViewModel, SetupViewModel
+├── Views/          # XAML pages (MainPage, FirstTimeSetupPage)
+├── Commands/       # RelayCommand (ICommand)
+└── Constants/      # Preference keys
+docs/               # Documentation assets
 ```
 
 ## Requirements
@@ -63,7 +70,6 @@ Clone the repository:
 
 ```sh
 git clone https://github.com/luniphys/flextime-calculator
-cd flextime-calculator
 ```
 
 Run for a specific target platform:
@@ -77,12 +83,6 @@ dotnet run --project src/flextime-calculator -f net10.0-windows10.0.19041.0
 
 # iOS (requires macOS)
 dotnet run --project src/flextime-calculator -f net10.0-ios
-```
-
-To build without running:
-
-```sh
-dotnet build
 ```
 
 ## License

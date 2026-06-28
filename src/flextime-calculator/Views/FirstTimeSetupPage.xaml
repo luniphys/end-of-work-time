@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="flextime_calculator.FirstTimeSetupPage"
+             x:Class="flextime_calculator.Views.FirstTimeSetupPage"
              BackgroundColor="{StaticResource mainBackgroundColor}">
 
     <ContentPage.Resources>
         <Style TargetType="Button">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
             <Setter Property="HeightRequest" Value="55"/>
             <Setter Property="FontSize" Value="Title"/>
         </Style>
@@ -34,7 +34,7 @@
             <Label Grid.Row="1" VerticalOptions="End" Text="Geben Sie Ihre" FontSize="Title"/>
 
             <!-- come Grid -->
-            <Grid Grid.Row="2" x:Name="comeGrid" IsEnabled="True" IsVisible="True">
+            <Grid Grid.Row="2" IsEnabled="{Binding ComeGridVisibility}" IsVisible="{Binding ComeGridVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="60*"/>
@@ -42,12 +42,12 @@
 
                 <Label Grid.Row="0" VerticalOptions="Start" Text="Standard Kommen Zeit an:" FontSize="Title" LineBreakMode="WordWrap"/>
                 <Border Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                    <TimePicker x:Name="setupComeTime" FontSize="Title" Time="06:00"/>
+                    <TimePicker FontSize="Title" Time="{Binding SetupCome}"/>
                 </Border>
             </Grid>
 
             <!-- go Grid -->
-            <Grid Grid.Row="2" x:Name="goGrid" IsEnabled="False" IsVisible="False">
+            <Grid Grid.Row="2" IsEnabled="{Binding GoGridVisibility}" IsVisible="{Binding GoGridVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="60*"/>
@@ -55,28 +55,31 @@
 
                 <Label Grid.Row="0" VerticalOptions="Start" Text="Standard Gehen Zeit an:" FontSize="Title" LineBreakMode="WordWrap"/>
                 <Border Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                    <TimePicker x:Name="setupGoTime" FontSize="Title" Time="14:15"/>
+                    <TimePicker FontSize="Title" Time="{Binding SetupGo}"/>
                 </Border>
             </Grid>
 
             <!-- weekly Grid -->
-            <Grid Grid.Row="2" x:Name="weeklyGrid" IsEnabled="False" IsVisible="False">
+            <Grid Grid.Row="2" IsEnabled="{Binding WeeklyGridVisibility}" IsVisible="{Binding WeeklyGridVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="60*"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" VerticalOptions="Start" Text="wöchentl. Stundenzahl an:" FontSize="Title" LineBreakMode="WordWrap"/>
+                <Label Grid.Row="0" VerticalOptions="Start" Text="wöchentl. Stundenzahl an:" 
+                       FontSize="Title" LineBreakMode="WordWrap"/>
                 <HorizontalStackLayout Grid.Row="1">
-                    <Entry x:Name="setupWeeklyHours" Text="37" FontSize="Title" Focused="Entry_Focused"/>
+                    <Entry Text="{Binding SetupWeeklyHours, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                           FontSize="Title" Focused="Entry_Focused"/>
                     <Label Text="h " FontSize="Title"/>
-                    <Entry x:Name="setupWeeklyMinutes" Text="30" FontSize="Title" Focused="Entry_Focused"/>
+                    <Entry Text="{Binding SetupWeeklyMinutes, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                           FontSize="Title" Focused="Entry_Focused"/>
                     <Label Text="min" FontSize="Title"/>
                 </HorizontalStackLayout>
             </Grid>
 
             <!-- small break Grid -->
-            <Grid Grid.Row="2" x:Name="smallBreakGrid" IsEnabled="False" IsVisible="False">
+            <Grid Grid.Row="2" IsEnabled="{Binding SmallBreakGridVisibility}" IsVisible="{Binding SmallBreakGridVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30*"/>
                     <RowDefinition Height="35*"/>
@@ -87,19 +90,19 @@
                 <HorizontalStackLayout Grid.Row="1">
                     <Label Text="Beginn: " FontSize="Large"/>
                     <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                        <TimePicker x:Name="setupSmallBreakStart" FontSize="Title" Time="09:00"/>
+                        <TimePicker FontSize="Title" Time="{Binding SetupSmallBreakStart}"/>
                     </Border>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Row="2">
                     <Label Text="   Ende:  " FontSize="Large"/>
                     <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                        <TimePicker x:Name="setupSmallBreakEnd" FontSize="Title" Time="09:15"/>
+                        <TimePicker FontSize="Title" Time="{Binding SetupSmallBreakEnd}"/>
                     </Border>
                 </HorizontalStackLayout>
             </Grid>
 
             <!-- main break Grid -->
-            <Grid Grid.Row="2" x:Name="mainBreakGrid" IsEnabled="False" IsVisible="False">
+            <Grid Grid.Row="2" IsEnabled="{Binding MainBreakGridVisibility}" IsVisible="{Binding MainBreakGridVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30*"/>
                     <RowDefinition Height="35*"/>
@@ -110,22 +113,23 @@
                 <HorizontalStackLayout Grid.Row="1">
                     <Label Text="Beginn: " FontSize="Large"/>
                     <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                        <TimePicker x:Name="setupMainBreakStart" FontSize="Title" Time="12:00"/>
+                        <TimePicker x:Name="setupMainBreakStart" FontSize="Title" Time="{Binding SetupMainBreakStart}"/>
                     </Border>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Row="2">
                     <Label Text="   Ende:  " FontSize="Large"/>
                     <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                        <TimePicker x:Name="setupMainBreakEnd" FontSize="Title" Time="12:30"/>
+                        <TimePicker x:Name="setupMainBreakEnd" FontSize="Title" Time="{Binding SetupMainBreakEnd}"/>
                     </Border>
                 </HorizontalStackLayout>
             </Grid>
 
             <!-- Menu buttons -->
             <HorizontalStackLayout Grid.Row="3">
-                <Button x:Name="BackButton" BackgroundColor="{StaticResource backButtonBackgroundColor}" IsEnabled="False" Opacity="0.5"
-                        Text="Zurück" TextColor="White" Clicked="BackButton_Clicked"/>
-                <Button x:Name="NextButton" Text="Nächste" TextColor="White" Clicked="NextButton_Clicked"/>
+                <Button BackgroundColor="{StaticResource backButtonBackgroundColor}" Opacity="{Binding BackButtonOpacity}"
+                        Text="Zurück" TextColor="White" Command="{Binding BackCommand}"/>
+                <Button Text="{Binding NextButtonText}" TextColor="White" BackgroundColor="{Binding NextButtonColor}"
+                        Command="{Binding NextCommand}"/>
             </HorizontalStackLayout>
 
         </Grid>

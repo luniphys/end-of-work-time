@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="flextime_calculator.MainPage"
+             x:Class="flextime_calculator.Views.MainPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource mainBackgroundColor}">
 
     <Grid>
         <Grid.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Right" Swiped="OpenSettings_Swiped"/>
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding SettingsCommand}"/>
         </Grid.GestureRecognizers>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
@@ -22,12 +22,14 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="settingsButton" Text="☰" FontSize="28" Clicked="SettingsButton_Clicked" CornerRadius="0"/>
-            <Button Grid.Column="2" x:Name="switchButton" Padding="0" Text="Tag" FontAttributes="Bold" Clicked="SwitchButton_Clicked" CornerRadius="0"/>
+            <Button Grid.Column="0" Text="☰" FontSize="28" CornerRadius="0" Command="{Binding SettingsCommand}"/>
+            <Button Grid.Column="2" Padding="0" FontAttributes="Bold" CornerRadius="0" BackgroundColor="{Binding SwitchButtonBackgroundColor}"
+                    Text="{Binding SwitchButtonText}" FontSize="{Binding SwitchButtonFontSize}"
+                    IsEnabled="{Binding SwitchButtonEnabled}" Command="{Binding SwitchCommand}"/>
         </Grid>
         
         <!-- Main Page -->
-        <Grid Grid.Row="1" x:Name="mainPageGrid">
+        <Grid Grid.Row="1" IsEnabled="{Binding MainPageVisibility}" IsVisible="{Binding MainPageVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="85*"/>
                 <RowDefinition Height="15*"/>
@@ -55,11 +57,11 @@
                         <RowDefinition Height="18*"/>
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="1" Text="Mo" FontSize="Large"/>
-                    <Label Grid.Row="2" Text="Di" FontSize="Large"/>
-                    <Label Grid.Row="3" Text="Mi" FontSize="Large"/>
-                    <Label Grid.Row="4" Text="Do" FontSize="Large"/>
-                    <Label Grid.Row="5" Text="Fr" FontSize="Large"/>
+                    <Label Grid.Row="1" FontSize="Large" Text="Mo"/>
+                    <Label Grid.Row="2" FontSize="Large" Text="Di"/>
+                    <Label Grid.Row="3" FontSize="Large" Text="Mi"/>
+                    <Label Grid.Row="4" FontSize="Large" Text="Do"/>
+                    <Label Grid.Row="5" FontSize="Large" Text="Fr"/>
                 </Grid>
 
                 <!-- Come times -->
@@ -75,19 +77,19 @@
 
                     <Label Grid.Row="0" VerticalOptions="End" Text="Kommen"/>
                     <Border Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="comeMon" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding ComeMonday}"/>
                     </Border>
                     <Border Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="comeTue" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding ComeTuesday}"/>
                     </Border>
                     <Border Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="comeWed" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding ComeWednesday}"/>
                     </Border>
                     <Border Grid.Row="4" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="comeThu" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding ComeThursday}"/>
                     </Border>
                     <Border Grid.Row="5" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="comeFri" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding ComeFriday}"/>
                     </Border>
                 </Grid>
 
@@ -104,16 +106,16 @@
 
                     <Label Grid.Row="0" VerticalOptions="End" Text="Gehen"/>
                     <Border Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="goMon" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding GoMonday}"/>
                     </Border>
                     <Border Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="goTue" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding GoTuesday}"/>
                     </Border>
                     <Border Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="goWed" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding GoWednesday}"/>
                     </Border>
                     <Border Grid.Row="4" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="62">
-                        <TimePicker x:Name="goThu" PropertyChanged="TimePicker_PropertyChanged"/>
+                        <TimePicker Time="{Binding GoThursday}"/>
                     </Border>
                 </Grid>
 
@@ -135,22 +137,22 @@
                     <Label Grid.Row="0" Grid.Column="0" VerticalOptions="End" Text="+/-"/>
                     <Label Grid.Row="0" Grid.Column="1" VerticalOptions="End" Text="Kumul."/>
 
-                    <Label Grid.Row="1" Grid.Column="0" x:Name="dayDeltaMon"/>
-                    <Label Grid.Row="2" Grid.Column="0" x:Name="dayDeltaTue"/>
-                    <Label Grid.Row="3" Grid.Column="0" x:Name="dayDeltaWed"/>
-                    <Label Grid.Row="4" Grid.Column="0" x:Name="dayDeltaThu"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding DayDeltaMonday}"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="{Binding DayDeltaTuesday}"/>
+                    <Label Grid.Row="3" Grid.Column="0" Text="{Binding DayDeltaWednesday}"/>
+                    <Label Grid.Row="4" Grid.Column="0" Text="{Binding DayDeltaThursday}"/>
 
-                    <Label Grid.Row="1" Grid.Column="1" x:Name="cumDeltaMon"/>
-                    <Label Grid.Row="2" Grid.Column="1" x:Name="cumDeltaTue"/>
-                    <Label Grid.Row="3" Grid.Column="1" x:Name="cumDeltaWed"/>
-                    <Label Grid.Row="4" Grid.Column="1" x:Name="cumDeltaThu"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding CumDeltaMonday}"/>
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding CumDeltaTuesday}"/>
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding CumDeltaWednesday}"/>
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding CumDeltaThursday}"/>
 
                     <VerticalStackLayout Grid.Row="5" Grid.ColumnSpan="2" VerticalOptions="End" Spacing="5">
-                        <Button HorizontalOptions="Center" BackgroundColor="Red"
-                            Text="Standardzeiten" FontSize="Small" Clicked="RestoreButton_Clicked"/>
+                        <Button HorizontalOptions="Center" BackgroundColor="Red" Text="Standardzeiten" FontSize="Small"
+                                Command="{Binding RestoreCommand}"/>
                         <HorizontalStackLayout HorizontalOptions="Center" Margin="13,0,0,0">
                             <Label Text="Spätschicht"/>
-                            <CheckBox x:Name="lateShiftCheckBox" Color="White" CheckedChanged="LateShiftCheckBox_CheckedChanged"/>
+                            <CheckBox Color="White" IsChecked="{Binding LateShift}"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     
@@ -161,21 +163,23 @@
             <!-- Feierabend time -->
             <Grid Grid.Row="1">
                 <HorizontalStackLayout Spacing="10">
-                    <Button HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20" Padding="0" BackgroundColor="Transparent"
-                            Text="?" FontSize="Small" TextColor="White" BorderColor="White" CornerRadius="15" Clicked="QuestionMarkWeekButton_Clicked"/>
-                    <Label Text="Feierabend:" HorizontalTextAlignment="End" FontSize="Title"/>
-                    <Label x:Name="feierabendTimeWeek" HorizontalTextAlignment="Start" FontSize="Title"/>
+                    <Button HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20" Padding="0"
+                            BackgroundColor="Transparent" Text="?" FontSize="Small" TextColor="White" BorderColor="White" CornerRadius="15"
+                            Command="{Binding QuestionMarkWeekCommand}"/>
+                    <Label HorizontalTextAlignment="End" FontSize="Title" Text="Feierabend:"/>
+                    <Label HorizontalTextAlignment="Start" FontSize="Title" Text="{Binding FeierabendWeek}"/>
                 </HorizontalStackLayout>
             </Grid>
 
         </Grid>
 
         <!-- Day page -->
-        <Grid Grid.Row="1" x:Name="dayPageGrid" IsVisible="False">
+        <Grid Grid.Row="1" IsEnabled="{Binding DayPageVisibility}" IsVisible="{Binding DayPageVisibility}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="30*"/>
-                <RowDefinition Height="20*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
                 <RowDefinition Height="20*"/>
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
@@ -183,28 +187,29 @@
             <HorizontalStackLayout Grid.Row="1">
                 <Label Text="Kommen: " FontSize="Large"/>
                 <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                    <TimePicker x:Name="comeDay" FontSize="Large" PropertyChanged="TimePicker_PropertyChanged"/>
+                    <TimePicker FontSize="Large" Time="{Binding ComeDay}"/>
                 </Border>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="2" Spacing="10">
-                <Button HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20" Padding="0" BackgroundColor="Transparent"
-                        Text="?" FontSize="Small" TextColor="White" BorderColor="White" CornerRadius="15" Clicked="QuestionMarkDayButton_Clicked"/>
-                <Label Text="Feierabend:" HorizontalTextAlignment="End" FontSize="Title"/>
-                <Label x:Name="feierabendTimeDay" HorizontalTextAlignment="Start" FontSize="Title"/>
+            <HorizontalStackLayout Grid.Row="3" Spacing="10">
+                <Button HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20" Padding="0"
+                        BackgroundColor="Transparent" Text="?" FontSize="Small" TextColor="White" BorderColor="White" CornerRadius="15"
+                        Command="{Binding QuestionMarkDayCommand}"/>
+                <Label HorizontalTextAlignment="End" FontSize="Title" Text="Feierabend:"/>
+                <Label HorizontalTextAlignment="Start" FontSize="Title" Text="{Binding FeierabendDay}"/>
             </HorizontalStackLayout>
             
         </Grid>
 
         <!-- Settings Panel -->
-        <BoxView Grid.Row="1" x:Name="dimOverlay" IsVisible="False" Opacity="0.6">
+        <BoxView Grid.Row="1" Opacity="0.6" IsEnabled="{Binding DimOverlayVisibility}" IsVisible="{Binding DimOverlayVisibility}">
             <BoxView.GestureRecognizers>
-                <SwipeGestureRecognizer Direction="Left" Swiped="CloseSettings_Swiped"/>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                <SwipeGestureRecognizer Direction="Left" Command="{Binding SettingsCommand}"/>
+                <TapGestureRecognizer Command="{Binding CloseInfoCommand}"/>
             </BoxView.GestureRecognizers>
         </BoxView>
-        <Border Grid.Row="1" x:Name="settingsPanel" IsVisible="False" Margin="0,0" HorizontalOptions="Start"
-                BackgroundColor="{StaticResource settingsBackgroundColor}" StrokeThickness="0" StrokeShape="Rectangle">
+        <Border Grid.Row="1" x:Name="SettingsPanel" HorizontalOptions="Start" Margin="0,0" StrokeThickness="0" StrokeShape="Rectangle" 
+                BackgroundColor="{StaticResource settingsBackgroundColor}" IsVisible="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
@@ -213,7 +218,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <Label Text="Einstellungen" VerticalOptions="Start" Margin="0,12,0,0" FontSize="Title"/>
+                    <Label VerticalOptions="Start" Margin="0,12,0,0" FontSize="Title" Text="Einstellungen"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -260,34 +265,38 @@
                             </Grid.RowDefinitions>
 
                             <Border Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="usualComeTime" PropertyChanged="UsualTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsCome}"/>
                             </Border>
                             <Border Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="usualGoTime" PropertyChanged="UsualTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsGo}"/>
                             </Border>
                             <HorizontalStackLayout Grid.Row="2">
-                                <Entry x:Name="weeklyHours" Text="00" Focused="Entry_Focused" TextChanged="Entry_TextChanged"/>
+                                <Entry Text="{Binding SettingsWeeklyHours, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
                                 <Label Text="h "/>
-                                <Entry x:Name="weeklyMinutes" Text="00" Focused="Entry_Focused" TextChanged="Entry_TextChanged"/>
+                                <Entry Text="{Binding SettingsWeeklyMinutes, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
                                 <Label Text="min"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Grid.Row="3">
-                                <Entry x:Name="dailyHours" Text="00" Focused="Entry_Focused" TextChanged="Entry_TextChanged"/>
+                                <Entry Text="{Binding SettingsDailyHours, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
                                 <Label Text="h "/>
-                                <Entry x:Name="dailyMinutes" Text="00" Focused="Entry_Focused" TextChanged="Entry_TextChanged"/>
+                                <Entry Text="{Binding SettingsDailyMinutes, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
                                 <Label Text="min"/>
                             </HorizontalStackLayout>
                             <Border Grid.Row="4" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="smallBreakStart" PropertyChanged="BreakTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsSmallBreakStart}"/>
                             </Border>
                             <Border Grid.Row="5" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="smallBreakEnd" PropertyChanged="BreakTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsSmallBreakEnd}"/>
                             </Border>
                             <Border Grid.Row="6" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="mainBreakStart" PropertyChanged="BreakTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsMainBreakStart}"/>
                             </Border>
                             <Border Grid.Row="7" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
-                                <TimePicker x:Name="mainBreakEnd" PropertyChanged="BreakTimePicker_PropertyChanged"/>
+                                <TimePicker Time="{Binding SettingsMainBreakEnd}"/>
                             </Border>
                         </Grid>
 
@@ -302,8 +311,8 @@
         </Border>
 
         <!-- Feierabend Info text bubble -->
-        <Border Grid.Row="1" x:Name="feierabendInfoWeek" IsVisible="False" VerticalOptions="End" Margin="25,0,25,90" Padding="8,8"
-                BackgroundColor="{StaticResource settingsBackgroundColor}">
+        <Border Grid.Row="1" VerticalOptions="End" Margin="25,0,25,90" Padding="8,8" BackgroundColor="{StaticResource settingsBackgroundColor}"
+                IsEnabled="{Binding InfoTextWeekVisibility}" IsVisible="{Binding InfoTextWeekVisibility}">
             <VerticalStackLayout>
 
                 <Grid>
@@ -311,8 +320,8 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="90*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="•" VerticalOptions="Start"/>
-                    <Label Grid.Column="1" x:Name="bulletPoint1" Text="Man kann nicht vor 12:00 Uhr gehen." HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Label Grid.Column="0" VerticalOptions="Start" Text="•"/>
+                    <Label Grid.Column="1" HorizontalOptions="Start" HorizontalTextAlignment="Start" Text="{Binding BulletPoint1Text}"/>
                 </Grid>
 
                 <Grid>
@@ -320,15 +329,15 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="90*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="•" VerticalOptions="Start"/>
-                    <Label Grid.Column="1" x:Name="bulletPoint2" Text="Geht man vor 13:00 Uhr wird die Mittagspause nicht dazu gerechnet." HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Label Grid.Column="0" VerticalOptions="Start" Text="•"/>
+                    <Label Grid.Column="1" HorizontalOptions="Start" HorizontalTextAlignment="Start" Text="{Binding BulletPoint2Text}"/>
                 </Grid>
                 
             </VerticalStackLayout>
         </Border>
 
-        <Border Grid.Row="1" x:Name="feierabendInfoDay" IsVisible="False" VerticalOptions="Center" Margin="25,0,25,0" Padding="8,8"
-        BackgroundColor="{StaticResource settingsBackgroundColor}">
+        <Border Grid.Row="1" VerticalOptions="Center" Margin="25,0,25,0" Padding="8,8" BackgroundColor="{StaticResource settingsBackgroundColor}"
+                IsEnabled="{Binding InfoTextDayVisibility}" IsVisible="{Binding InfoTextDayVisibility}">
             <VerticalStackLayout>
 
                 <Grid>
@@ -336,8 +345,9 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="90*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="•" VerticalOptions="Start"/>
-                    <Label Grid.Column="1" Text="Hier wird allein die tägliche Stundenzahl berücksichtigt." HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Label Grid.Column="0" VerticalOptions="Start" Text="•"/>
+                    <Label Grid.Column="1" HorizontalOptions="Start" HorizontalTextAlignment="Start"
+                           Text="Hier wird allein die tägliche Stundenzahl berücksichtigt."/>
                 </Grid>
 
                 <Grid>
@@ -346,7 +356,8 @@
                         <ColumnDefinition Width="90*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Text="•" VerticalOptions="Start"/>
-                    <Label Grid.Column="1" Text="Kommt man nach 9:00 Uhr wird die kleine Pause nicht angerechnet." HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                    <Label Grid.Column="1" HorizontalOptions="Start" HorizontalTextAlignment="Start"
+                           Text="Kommt man nach 9:00 Uhr wird die kleine Pause nicht angerechnet."/>
                 </Grid>
 
             </VerticalStackLayout>

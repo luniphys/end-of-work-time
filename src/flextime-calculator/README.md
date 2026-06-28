@@ -1,20 +1,33 @@
 # src/flextime-calculator
 
-Main application sourcecode directory.
+Application sourcecode directory.
 
 ## Contents
 
-- `App.xaml` / `App.xaml.cs`: Application entry point
-- `AppShell.xaml` / `AppShell.xaml.cs`: Defining the app's pages
-- `MainPage.xaml` / `MainPage.xaml.cs`: Main screen with week and day views and settings panel
-- `FirstTimeSetupPage.xaml` / `FirstTimeSetupPage.xaml.cs`: Multi-step setup shown on first launch
-- `MauiProgram.cs`: App configuration
-- `flextime-calculator.csproj`: Project file with MAUI settings
-- `Constants/`: Preference keys for persistent storage
-- `Platforms/`: Platform-specific entry points
-- `Resources/`: App icon, splash screen, fonts, images, and XAML style/color resources
-- `Properties/`: Launch settings
+```
+flextime-calculator/
+├── App.xaml / App.xaml.cs                      # Application entry point
+├── AppShell.xaml / AppShell.xaml.cs            # Defining the app's pages
+├── MauiProgram.cs                              # App configuration
+├── flextime-calculator.csproj                  # Project file
+├── Models/
+│   ├── MainModel.cs                            # Main model containing all logic
+│   └── TimeCalculations.cs                     # Record holding computed results (Feierabend times, daily/cumulative deltas)
+├── ViewModels/
+│   ├── ViewModelBase.cs                        # INotifyPropertyChanged implementation
+│   ├── MainViewModel.cs                        # ViewModel for the main page
+│   └── SetupViewModel.cs                       # ViewModel for the first-time setup wizard
+├── Views/
+│   ├── MainPage.xaml / MainPage.xaml.cs        # Main page with week/day views and settings panel
+│   └── FirstTimeSetupPage.xaml / .xaml.cs      # Setup wizard shown on first launch
+├── Commands/
+│   └── RelayCommand.cs                         # ICommand implementation
+├── Constants/
+│   └── PreferenceKeys.cs                       # Keys for MAUI `Preferences`
+├── Platforms/                                  # Platform specific files
+└── Resources/                                  # Assets
+```
 
 ## Notes
 
-- All user settings and time states are stored via MAUI's `Preferences`
+- The settings and time states are stored via MAUI's `Preferences`
