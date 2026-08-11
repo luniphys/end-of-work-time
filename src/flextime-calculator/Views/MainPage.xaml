@@ -230,15 +230,17 @@
 
                         <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                
+                                <RowDefinition Height="10*"/>
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" HorizontalOptions="End" Text="Standard Kommen:"/>
@@ -249,19 +251,22 @@
                             <Label Grid.Row="5" HorizontalOptions="End" Text="Kleine Pause Ende:"/>
                             <Label Grid.Row="6" HorizontalOptions="End" Text="Mittagspause Beginn:"/>
                             <Label Grid.Row="7" HorizontalOptions="End" Text="Mittagspause Ende:"/>
+                            <Label Grid.Row="8" HorizontalOptions="End" Text="Zusätzl. tägl. Pausen:"/>
                         </Grid>
 
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="12*"/>
-                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+                                <RowDefinition Height="10*"/>
+
+                                <RowDefinition Height="10*"/>
                             </Grid.RowDefinitions>
 
                             <Border Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
@@ -298,13 +303,21 @@
                             <Border Grid.Row="7" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="90">
                                 <TimePicker Time="{Binding SettingsMainBreakEnd}"/>
                             </Border>
+                            <HorizontalStackLayout Grid.Row="8">
+                                <Entry Text="{Binding SettingsAdditionalHours, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
+                                <Label Text="h "/>
+                                <Entry Text="{Binding SettingsAdditionalMinutes, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                                       Focused="Entry_Focused"/>
+                                <Label Text="min"/>
+                            </HorizontalStackLayout>
                         </Grid>
 
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <Label Text="©github.com/luniphys"/>
+                    <Label Text="©github.com/luniphy"/>
                 </Grid>
 
             </Grid>

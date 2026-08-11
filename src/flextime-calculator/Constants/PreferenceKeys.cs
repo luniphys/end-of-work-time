@@ -16,6 +16,8 @@ internal static class PreferenceKeys
     public const string SettingsSmallBreakEnd = "SettingsSmallBreakEnd";
     public const string SettingsMainBreakStart = "SettingsMainBreakStart";
     public const string SettingsMainBreakEnd = "SettingsMainBreakEnd";
+    public const string SettingsAdditionalHours = "SettingsAdditionalHours";
+    public const string SettingsAdditionalMinutes = "SettingsAdditionalMinutes";
 
     // States
     public const string ComeMonday = "ComeMonday";

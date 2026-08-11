@@ -22,16 +22,18 @@ public sealed class MainModel
     public TimeSpan ComeDay       { get; set; }
 
     // Setting times
-    public TimeSpan SettingsCome            { get; set; }
-    public TimeSpan SettingsGo              { get; set; }
-    public string   SettingsWeeklyHours     { get; set; } = string.Empty;
-    public string   SettingsWeeklyMinutes   { get; set; } = string.Empty;
-    public string   SettingsDailyHours      { get; set; } = string.Empty;
-    public string   SettingsDailyMinutes    { get; set; } = string.Empty;
-    public TimeSpan SettingsSmallBreakStart { get; set; }
-    public TimeSpan SettingsSmallBreakEnd   { get; set; }
-    public TimeSpan SettingsMainBreakStart  { get; set; }
-    public TimeSpan SettingsMainBreakEnd    { get; set; }
+    public TimeSpan SettingsCome              { get; set; }
+    public TimeSpan SettingsGo                { get; set; }
+    public string   SettingsWeeklyHours       { get; set; } = string.Empty;
+    public string   SettingsWeeklyMinutes     { get; set; } = string.Empty;
+    public string   SettingsDailyHours        { get; set; } = string.Empty;
+    public string   SettingsDailyMinutes      { get; set; } = string.Empty;
+    public TimeSpan SettingsSmallBreakStart   { get; set; }
+    public TimeSpan SettingsSmallBreakEnd     { get; set; }
+    public TimeSpan SettingsMainBreakStart    { get; set; }
+    public TimeSpan SettingsMainBreakEnd      { get; set; }
+    public string   SettingsAdditionalHours   { get; set; } = string.Empty;
+    public string   SettingsAdditionalMinutes { get; set; } = string.Empty;
 
     // Other
     public bool LateShift { get; set; }
@@ -64,6 +66,9 @@ public sealed class MainModel
         SettingsSmallBreakEnd = ParseTime(Preferences.Get(PreferenceKeys.SettingsSmallBreakEnd, "09:15"));
         SettingsMainBreakStart = ParseTime(Preferences.Get(PreferenceKeys.SettingsMainBreakStart, "12:00"));
         SettingsMainBreakEnd = ParseTime(Preferences.Get(PreferenceKeys.SettingsMainBreakEnd, "12:30"));
+
+        SettingsAdditionalHours = Preferences.Get(PreferenceKeys.SettingsAdditionalHours, "0");
+        SettingsAdditionalMinutes = Preferences.Get(PreferenceKeys.SettingsAdditionalMinutes, "0");
 
         // Come and go times
         string settingsCome = SettingsCome.ToString();
@@ -112,6 +117,8 @@ public sealed class MainModel
         Preferences.Set(PreferenceKeys.SettingsSmallBreakEnd, SettingsSmallBreakEnd.ToString());
         Preferences.Set(PreferenceKeys.SettingsMainBreakStart, SettingsMainBreakStart.ToString());
         Preferences.Set(PreferenceKeys.SettingsMainBreakEnd, SettingsMainBreakEnd.ToString());
+        Preferences.Set(PreferenceKeys.SettingsAdditionalHours, SettingsAdditionalHours);
+        Preferences.Set(PreferenceKeys.SettingsAdditionalMinutes, SettingsAdditionalMinutes);
 
         Preferences.Set(PreferenceKeys.LateShift, LateShift);
     }
@@ -140,6 +147,10 @@ public sealed class MainModel
 
         double dailyTotal = TimeToDouble(SettingsDailyHours, SettingsDailyMinutes);
         TimeSpan totalDailyHours = TimeSpan.FromHours(dailyTotal);
+
+        double additionalBreak = TimeToDouble(SettingsAdditionalHours, SettingsAdditionalMinutes);
+        TimeSpan additionalBreakDay = TimeSpan.FromHours(additionalBreak);
+        TimeSpan additionalBreakWeek = additionalBreakDay * 5;
 
 
         // Come, go & duration lists
@@ -170,7 +181,7 @@ public sealed class MainModel
 
         for (int i = 0; i < dayDeltas.Length; i++)
         {
-            deltaTime = durations[i] - totalDailyHours;
+            deltaTime = durations[i] - totalDailyHours - additionalBreakDay;
             dayDeltas[i] = deltaTime;
 
             cumDeltaTime += deltaTime;
@@ -187,6 +198,8 @@ public sealed class MainModel
         TimeSpan fridayHours = totalWeeklyHours - fourDayDuration;
         TimeSpan comeFriday = comeTimes[4];
         TimeSpan feierAbendWeek = (comeFriday >= SettingsSmallBreakEnd) ? comeFriday + fridayHours : comeFriday + fridayHours + smallBreakDuration;
+
+        feierAbendWeek += additionalBreakWeek;
 
         TimeSpan oneOClock = new TimeSpan(13, 0, 0); // Leaving before 13:00 won't add the main break to working times
         feierAbendWeek = (feierAbendWeek < oneOClock) ? feierAbendWeek : feierAbendWeek + mainBreakDuration;
@@ -206,6 +219,8 @@ public sealed class MainModel
         // Calculating Feierabend day
         TimeSpan comeDay = comeTimes[5];
         TimeSpan feierAbendDay = (comeDay >= SettingsSmallBreakEnd) ? comeDay + totalDailyHours + mainBreakDuration : comeDay + totalDailyHours + totalBreakDuration;
+
+        feierAbendDay += additionalBreakDay;
 
 
         return new TimeCalculations(feierAbendWeek, feierAbendDay, dayDeltas, cumDeltas);

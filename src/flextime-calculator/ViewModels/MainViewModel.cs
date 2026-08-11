@@ -342,6 +342,28 @@ public sealed class MainViewModel : ViewModelBase
             SaveAndCalculate();
         }
     }
+    public string SettingsAdditionalHours
+    {
+        get => _model.SettingsAdditionalHours;
+        set
+        {
+            if (_model.SettingsAdditionalHours == value) { return; }
+            _model.SettingsAdditionalHours = value;
+            OnPropertyChanged();
+            SaveAndCalculate();
+        }
+    }
+    public string SettingsAdditionalMinutes
+    {
+        get => _model.SettingsAdditionalMinutes;
+        set
+        {
+            if (_model.SettingsAdditionalMinutes == value) { return; }
+            _model.SettingsAdditionalMinutes = value;
+            OnPropertyChanged();
+            SaveAndCalculate();
+        }
+    }
 
     // Delta times
     public string DayDeltaMonday
@@ -743,6 +765,8 @@ public sealed class MainViewModel : ViewModelBase
         OnPropertyChanged(nameof(SettingsSmallBreakEnd));
         OnPropertyChanged(nameof(SettingsMainBreakStart));
         OnPropertyChanged(nameof(SettingsMainBreakEnd));
+        OnPropertyChanged(nameof(SettingsAdditionalHours));
+        OnPropertyChanged(nameof(SettingsAdditionalMinutes));
         OnPropertyChanged(nameof(LateShift));
     }
 

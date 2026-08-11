@@ -23,18 +23,21 @@ public sealed class SetupViewModel : ViewModelBase
     private TimeSpan _setupSmallBreakEnd   = new TimeSpan(9, 15, 0);
     private TimeSpan _setupMainBreakStart  = new TimeSpan(12, 0, 0);
     private TimeSpan _setupMainBreakEnd    = new TimeSpan(12, 30, 0);
+    private string _setupAdditionalHours   = "0";
+    private string _setupAdditionalMinutes = "0";
 
-    private bool _comeGridVisibility       = true;
-    private bool _goGridVisibility         = false;
-    private bool _weeklyGridVisibility     = false;
-    private bool _smallBreakGridVisibility = false;
-    private bool _mainBreakGridVisibility  = false;
+    private bool _comeGridVisibility            = true;
+    private bool _goGridVisibility              = false;
+    private bool _weeklyGridVisibility          = false;
+    private bool _smallBreakGridVisibility      = false;
+    private bool _mainBreakGridVisibility       = false;
+    private bool _additionalBreakGridVisibility = false;
 
     // Other
     private int _pageIndex  = 0;
     private Color _vsPurple = Color.FromRgb(80, 43, 212);
 
-    private const int GridCount = 5;
+    private const int GridCount = 6;
 
     #endregion
 
@@ -121,6 +124,16 @@ public sealed class SetupViewModel : ViewModelBase
         get => _setupMainBreakEnd;
         set => SetField(ref _setupMainBreakEnd, value);
     }
+    public string SetupAdditionalHours
+    {
+        get => _setupAdditionalHours;
+        set => SetField(ref _setupAdditionalHours, value);
+    }
+    public string SetupAdditionalMinutes
+    {
+        get => _setupAdditionalMinutes;
+        set => SetField(ref _setupAdditionalMinutes, value);
+    }
 
     public bool ComeGridVisibility
     {
@@ -146,6 +159,11 @@ public sealed class SetupViewModel : ViewModelBase
     {
         get => _mainBreakGridVisibility;
         set => SetField(ref _mainBreakGridVisibility, value);
+    }
+    public bool AdditionalBreakGridVisibility
+    {
+        get => _additionalBreakGridVisibility;
+        set => SetField(ref _additionalBreakGridVisibility, value);
     }
 
     #endregion
@@ -179,14 +197,15 @@ public sealed class SetupViewModel : ViewModelBase
     /// </summary>
     private void UpdatePage()
     {
-        ComeGridVisibility       = _pageIndex == 0;
-        GoGridVisibility         = _pageIndex == 1;
-        WeeklyGridVisibility     = _pageIndex == 2;
-        SmallBreakGridVisibility = _pageIndex == 3;
-        MainBreakGridVisibility  = _pageIndex == 4;
+        ComeGridVisibility            = _pageIndex == 0;
+        GoGridVisibility              = _pageIndex == 1;
+        WeeklyGridVisibility          = _pageIndex == 2;
+        SmallBreakGridVisibility      = _pageIndex == 3;
+        MainBreakGridVisibility       = _pageIndex == 4;
+        AdditionalBreakGridVisibility = _pageIndex == 5;
 
-        _backButtonEnabled       = _pageIndex > 0;
-        BackButtonOpacity        = _pageIndex == 0 ? 0.5 : 1;
+        _backButtonEnabled = _pageIndex > 0;
+        BackButtonOpacity  = _pageIndex == 0 ? 0.5 : 1;
 
         ((RelayCommand)BackCommand).NotifyCanExecuteChanged();
         
@@ -213,6 +232,8 @@ public sealed class SetupViewModel : ViewModelBase
         Preferences.Set(PreferenceKeys.SettingsSmallBreakEnd, SetupSmallBreakEnd.ToString());
         Preferences.Set(PreferenceKeys.SettingsMainBreakStart, SetupMainBreakStart.ToString());
         Preferences.Set(PreferenceKeys.SettingsMainBreakEnd, SetupMainBreakEnd.ToString());
+        Preferences.Set(PreferenceKeys.SettingsAdditionalHours, SetupAdditionalHours);
+        Preferences.Set(PreferenceKeys.SettingsAdditionalMinutes, SetupAdditionalMinutes);
 
         Preferences.Set(PreferenceKeys.SetupComplete, true);
 

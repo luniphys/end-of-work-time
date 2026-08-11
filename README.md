@@ -9,7 +9,7 @@ A cross-platform .NET MAUI app for workers to track their weekly working time. E
 <br/>
 
 <p align="center">
-    <img src="docs/Images/example_screenshots.png" width="800" alt="GUI image">
+    <img src="docs/Images/screenshot_example.png" width="800" alt="GUI image">
 </p>
 
 ## Table of Contents
@@ -39,7 +39,8 @@ A slide-in settings panel lets you adjust usual beginning/ending times, weekly a
 - Daily and cumulative time deltas
 - Automatic Friday end of work time calculation
 - Day view for single-day end of work time calculation
-- Configurable usual beginning/end times, weekly hours, and break durations in settings panel
+- Configurable usual beginning/end times, weekly hours and break durations in settings panel
+- Additional daily custom brakes (smoking etc.) available
 - Restore button to reset all times to usual times
 - Checkbox for late shift mode, which configures earliest leaving time
 - Info text bubbles about time/break conventions
@@ -87,4 +88,4 @@ dotnet run --project src/flextime-calculator -f net10.0-ios
 
 ## License
 
-MIT © [luniphys](https://github.com/luniphys)
+MIT © [luniphy](https://github.com/luniphy)

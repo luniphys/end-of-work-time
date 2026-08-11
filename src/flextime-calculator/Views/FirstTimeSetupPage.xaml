@@ -124,6 +124,25 @@
                 </HorizontalStackLayout>
             </Grid>
 
+            <!-- additional break Grid -->
+            <Grid Grid.Row="2" IsEnabled="{Binding AdditionalBreakGridVisibility}" IsVisible="{Binding AdditionalBreakGridVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="60*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" VerticalOptions="Start" Text="zusätzlichen täglichen Pausen an (Rauchen etc.):" 
+                       FontSize="Title" LineBreakMode="WordWrap"/>
+                <HorizontalStackLayout Grid.Row="1">
+                    <Entry Text="{Binding SetupAdditionalHours, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                           FontSize="Title" Focused="Entry_Focused"/>
+                    <Label Text="h " FontSize="Title"/>
+                    <Entry Text="{Binding SetupAdditionalMinutes, Mode=TwoWay, UpdateSourceEventName=Unfocused}" 
+                           FontSize="Title" Focused="Entry_Focused"/>
+                    <Label Text="min" FontSize="Title"/>
+                </HorizontalStackLayout>
+            </Grid>
+
             <!-- Menu buttons -->
             <HorizontalStackLayout Grid.Row="3">
                 <Button BackgroundColor="{StaticResource backButtonBackgroundColor}" Opacity="{Binding BackButtonOpacity}"
