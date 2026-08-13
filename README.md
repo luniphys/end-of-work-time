@@ -72,7 +72,7 @@ docs/               # Documentation assets
 Clone the repository:
 
 ```sh
-git clone https://github.com/luniphys/flextime-calculator
+git clone https://github.com/luniphy/flextime-calculator
 ```
 
 Run for a specific target platform:
