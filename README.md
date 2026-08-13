@@ -35,14 +35,16 @@ A slide-in settings panel lets you adjust usual beginning/ending times, weekly a
 ## Features
 
 - First-time setup wizard for initial configuration
-- Week view with Mon–Fri inputs
-- Daily and cumulative time deltas
-- Automatic Friday end of work time calculation
+- Week view with:
+    - Mon–Fri inputs
+    - Daily and cumulative time deltas
+    - Automatic Friday end of work time calculation
+    - Restore button to reset all times to usual times
+    - Checkbox for late shift mode, which configures earliest leaving time
 - Day view for single-day end of work time calculation
-- Configurable usual beginning/end times, weekly hours and break durations in settings panel
-- Additional daily custom brakes (smoking etc.) available
-- Restore button to reset all times to usual times
-- Checkbox for late shift mode, which configures earliest leaving time
+- Settings panel with:
+    - Configurable usual beginning/end times, weekly hours and break durations
+    - Additional daily custom brakes (smoking etc.)
 - Info text bubbles about time/break conventions
 - All time states stored across app restarts
 
@@ -54,7 +56,7 @@ The app follows the **MVVM (Model-View-ViewModel)** pattern:
 src/flextime-calculator/
 ├── Models/         # Data and time calculation logic
 ├── ViewModels/     # ViewModelBase (INotifyPropertyChanged), MainViewModel, SetupViewModel
-├── Views/          # XAML pages (MainPage, FirstTimeSetupPage)
+├── Views/          # MainPage, FirstTimeSetupPage (XAML + Code-behind)
 ├── Commands/       # RelayCommand (ICommand)
 └── Constants/      # Preference keys
 docs/               # Documentation assets
