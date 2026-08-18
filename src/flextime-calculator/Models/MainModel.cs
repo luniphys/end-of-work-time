@@ -159,8 +159,10 @@ public sealed class MainModel
 
         TimeSpan[] durations = new TimeSpan[4];
 
+        TimeSpan OneHourPastMainBreakStart = SettingsMainBreakStart + new TimeSpan(1, 0, 0);
 
-        // Check if small break needs to be subtracted
+
+        // Check if small/main breaks need to be subtracted
         for (int i = 0; i < comeTimes.Length; i++)
         {
             comeTimes[i] = (comeTimes[i] > SettingsSmallBreakStart && comeTimes[i] <= SettingsSmallBreakEnd) ? SettingsSmallBreakEnd : comeTimes[i];
@@ -168,7 +170,28 @@ public sealed class MainModel
 
         for (int i = 0; i < durations.Length; i++)
         {
-            durations[i] = (comeTimes[i] >= SettingsSmallBreakEnd) ? (goTimes[i] - comeTimes[i] - mainBreakDuration) : (goTimes[i] - comeTimes[i] - totalBreakDuration);
+            if (comeTimes[i] >= SettingsSmallBreakEnd)
+            {
+                if (goTimes[i] < OneHourPastMainBreakStart)
+                {
+                    durations[i] = goTimes[i] - comeTimes[i];
+                }
+                else
+                {
+                    durations[i] = goTimes[i] - comeTimes[i] - mainBreakDuration;
+                }
+            }
+            else
+            {
+                if (goTimes[i] < OneHourPastMainBreakStart)
+                {
+                    durations[i] = goTimes[i] - comeTimes[i] - smallBreakDuration;
+                }
+                else
+                {
+                    durations[i] = goTimes[i] - comeTimes[i] - totalBreakDuration;
+                }
+            }
         }
 
 
@@ -201,13 +224,13 @@ public sealed class MainModel
 
         feierAbendWeek += additionalBreakWeek;
 
-        TimeSpan oneOClock = new TimeSpan(13, 0, 0); // Leaving before 13:00 won't add the main break to working times
-        feierAbendWeek = (feierAbendWeek < oneOClock) ? feierAbendWeek : feierAbendWeek + mainBreakDuration;
+        // Leaving before 13:00 won't add the main break to working times
+        feierAbendWeek = (feierAbendWeek < OneHourPastMainBreakStart) ? feierAbendWeek : feierAbendWeek + mainBreakDuration;
 
-        TimeSpan twelveOClock = new TimeSpan(12, 0, 0); // Can't leave before 12:00
+        // Can't leave before 12:00
         if (!LateShift)
         {
-            feierAbendWeek = (feierAbendWeek < twelveOClock) ? twelveOClock : feierAbendWeek;
+            feierAbendWeek = (feierAbendWeek < SettingsMainBreakStart) ? SettingsMainBreakStart : feierAbendWeek;
         }
 
         TimeSpan fourFifteen = new TimeSpan(16, 15, 0); // Can't leave before 16:15 at late shift
@@ -215,6 +238,7 @@ public sealed class MainModel
         {
             feierAbendWeek = (feierAbendWeek < fourFifteen) ? fourFifteen : feierAbendWeek;
         }
+
 
         // Calculating Feierabend day
         TimeSpan comeDay = comeTimes[5];
